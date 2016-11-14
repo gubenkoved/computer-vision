@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpticalFlow", "OpticalFlow\OpticalFlow.csproj", "{CB943949-7793-4B08-ABB2-4CF96F8909CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerVision", "ComputerVision\ComputerVision.csproj", "{EA93B800-8BA0-4B8C-B3B4-6DA36A96F48E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegionTracking", "RegionTracking\RegionTracking.csproj", "{4AE2CB13-30DA-460E-8866-FC80051B175F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB943949-7793-4B08-ABB2-4CF96F8909CC}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{CB943949-7793-4B08-ABB2-4CF96F8909CC}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{CB943949-7793-4B08-ABB2-4CF96F8909CC}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{CB943949-7793-4B08-ABB2-4CF96F8909CC}.Debug|x86.ActiveCfg = Debug|x86
+		{CB943949-7793-4B08-ABB2-4CF96F8909CC}.Debug|x86.Build.0 = Debug|x86
+		{CB943949-7793-4B08-ABB2-4CF96F8909CC}.Release|Any CPU.ActiveCfg = Release|x86
+		{CB943949-7793-4B08-ABB2-4CF96F8909CC}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{CB943949-7793-4B08-ABB2-4CF96F8909CC}.Release|Mixed Platforms.Build.0 = Release|x86
+		{CB943949-7793-4B08-ABB2-4CF96F8909CC}.Release|x86.ActiveCfg = Release|x86
+		{CB943949-7793-4B08-ABB2-4CF96F8909CC}.Release|x86.Build.0 = Release|x86
+		{EA93B800-8BA0-4B8C-B3B4-6DA36A96F48E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA93B800-8BA0-4B8C-B3B4-6DA36A96F48E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA93B800-8BA0-4B8C-B3B4-6DA36A96F48E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EA93B800-8BA0-4B8C-B3B4-6DA36A96F48E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EA93B800-8BA0-4B8C-B3B4-6DA36A96F48E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EA93B800-8BA0-4B8C-B3B4-6DA36A96F48E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA93B800-8BA0-4B8C-B3B4-6DA36A96F48E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA93B800-8BA0-4B8C-B3B4-6DA36A96F48E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EA93B800-8BA0-4B8C-B3B4-6DA36A96F48E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{EA93B800-8BA0-4B8C-B3B4-6DA36A96F48E}.Release|x86.ActiveCfg = Release|Any CPU
+		{4AE2CB13-30DA-460E-8866-FC80051B175F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{4AE2CB13-30DA-460E-8866-FC80051B175F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{4AE2CB13-30DA-460E-8866-FC80051B175F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{4AE2CB13-30DA-460E-8866-FC80051B175F}.Debug|x86.ActiveCfg = Debug|x86
+		{4AE2CB13-30DA-460E-8866-FC80051B175F}.Debug|x86.Build.0 = Debug|x86
+		{4AE2CB13-30DA-460E-8866-FC80051B175F}.Release|Any CPU.ActiveCfg = Release|x86
+		{4AE2CB13-30DA-460E-8866-FC80051B175F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{4AE2CB13-30DA-460E-8866-FC80051B175F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{4AE2CB13-30DA-460E-8866-FC80051B175F}.Release|x86.ActiveCfg = Release|x86
+		{4AE2CB13-30DA-460E-8866-FC80051B175F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
