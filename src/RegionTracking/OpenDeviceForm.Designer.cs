@@ -28,74 +28,62 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.DevicesComboBox = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ModeLabel = new System.Windows.Forms.Label();
+            this.cbDevice = new System.Windows.Forms.ComboBox();
             this.OkButton = new System.Windows.Forms.Button();
+            this.cbCapability = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // DevicesComboBox
+            // cbDevice
             // 
-            this.DevicesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.DevicesComboBox.FormattingEnabled = true;
-            this.DevicesComboBox.Location = new System.Drawing.Point(15, 26);
-            this.DevicesComboBox.Name = "DevicesComboBox";
-            this.DevicesComboBox.Size = new System.Drawing.Size(280, 22);
-            this.DevicesComboBox.TabIndex = 1;
-            this.DevicesComboBox.SelectedIndexChanged += new System.EventHandler(this.DevicesComboBox_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(199, 14);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Choose device, which support this mode:";
-            // 
-            // ModeLabel
-            // 
-            this.ModeLabel.AutoSize = true;
-            this.ModeLabel.Location = new System.Drawing.Point(218, 9);
-            this.ModeLabel.Name = "ModeLabel";
-            this.ModeLabel.Size = new System.Drawing.Size(11, 14);
-            this.ModeLabel.TabIndex = 4;
-            this.ModeLabel.Text = "-";
+            this.cbDevice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDevice.FormattingEnabled = true;
+            this.cbDevice.Location = new System.Drawing.Point(12, 12);
+            this.cbDevice.Name = "cbDevice";
+            this.cbDevice.Size = new System.Drawing.Size(280, 21);
+            this.cbDevice.TabIndex = 1;
+            this.cbDevice.SelectedIndexChanged += new System.EventHandler(this.DevicesComboBox_SelectedIndexChanged);
             // 
             // OkButton
             // 
             this.OkButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.OkButton.Location = new System.Drawing.Point(302, 26);
+            this.OkButton.Location = new System.Drawing.Point(307, 12);
             this.OkButton.Name = "OkButton";
-            this.OkButton.Size = new System.Drawing.Size(75, 23);
+            this.OkButton.Size = new System.Drawing.Size(75, 48);
             this.OkButton.TabIndex = 0;
             this.OkButton.Text = "Ok";
             this.OkButton.UseVisualStyleBackColor = true;
             // 
+            // cbCapability
+            // 
+            this.cbCapability.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCapability.FormattingEnabled = true;
+            this.cbCapability.Location = new System.Drawing.Point(12, 39);
+            this.cbCapability.Name = "cbCapability";
+            this.cbCapability.Size = new System.Drawing.Size(280, 21);
+            this.cbCapability.TabIndex = 1;
+            this.cbCapability.SelectedIndexChanged += new System.EventHandler(this.cbCapability_SelectedIndexChanged);
+            // 
             // OpenDeviceForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(397, 62);
+            this.ClientSize = new System.Drawing.Size(394, 77);
             this.Controls.Add(this.OkButton);
-            this.Controls.Add(this.ModeLabel);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.DevicesComboBox);
-            this.Font = new System.Drawing.Font("PT Sans", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Controls.Add(this.cbCapability);
+            this.Controls.Add(this.cbDevice);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "OpenDeviceForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Select device";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ComboBox DevicesComboBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label ModeLabel;
+        private System.Windows.Forms.ComboBox cbDevice;
         private System.Windows.Forms.Button OkButton;
+        private System.Windows.Forms.ComboBox cbCapability;
     }
 }

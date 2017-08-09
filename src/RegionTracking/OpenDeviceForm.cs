@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using AForge.Video.DirectShow;
 
@@ -17,39 +15,67 @@ namespace RegionTracking
             public string Name { get; set; }
             public VideoCaptureDevice Device { get; set; }
         }
-        
+
+        class CapabilityInfo
+        {
+            public string Name { get; set; }
+
+            public VideoCapabilities Capability { get; set; }
+        }
+
         public VideoCaptureDevice SelectedDevice { get; private set; }
-        private Size _size;
 
         public OpenDeviceForm(Size size)
         {
             InitializeComponent();
 
-            _size = size;
-
-            ModeLabel.Text = string.Format("{0}x{1}", size.Width, size.Height);
-            
-            var devicesInfo = new FilterInfoCollection(FilterCategory.VideoInputDevice)
+            IEnumerable<DeviceInfo> devicesInfos = new FilterInfoCollection(FilterCategory.VideoInputDevice)
                 .OfType<FilterInfo>()
-                .Select(f => new DeviceInfo (){ Name = f.Name, Device = new VideoCaptureDevice(f.MonikerString) })
-                .Where(devInfo => devInfo.Device.VideoCapabilities != null && devInfo.Device.VideoCapabilities.Where(vc => vc.FrameSize == size).Count() > 0);
+                .Select(f => new DeviceInfo() { Name = f.Name, Device = new VideoCaptureDevice(f.MonikerString) })
+                .Where(devInfo => devInfo.Device.VideoCapabilities != null && devInfo.Device.VideoCapabilities.Any())
+                .ToArray();
 
-            DevicesComboBox.DisplayMember = "Name";
+            cbDevice.DisplayMember = "Name";
 
-            foreach (var deviceInfo in devicesInfo)
+            foreach (DeviceInfo deviceInfo in devicesInfos)
             {
-                DevicesComboBox.Items.Add(deviceInfo);
+                cbDevice.Items.Add(deviceInfo);
             }
 
-            if (devicesInfo.Count() > 0)
-                DevicesComboBox.SelectedIndex = 0;
+            if (devicesInfos.Count() > 0)
+                cbDevice.SelectedIndex = 0;
         }
 
         private void DevicesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SelectedDevice = ((DeviceInfo)DevicesComboBox.SelectedItem).Device;
+            SelectedDevice = ((DeviceInfo)cbDevice.SelectedItem).Device;
 
-            SelectedDevice.DesiredFrameSize = _size;
+            RebindCapabilities(SelectedDevice);
+        }
+
+        private void RebindCapabilities(VideoCaptureDevice device)
+        {
+            cbCapability.Items.Clear();
+
+            foreach (var capability in device.VideoCapabilities)
+            {
+                cbCapability.Items.Add(new CapabilityInfo()
+                {
+                    Name = $"{capability.FrameSize.Width}x{capability.FrameSize.Height} ({capability.BitCount} bit) {capability.FrameRate.ToString("F0")} fps",
+                    Capability = capability,
+                });
+            }
+
+            cbCapability.SelectedIndex = 0;
+        }
+
+        private void cbCapability_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            VideoCapabilities selectedCapability = ((CapabilityInfo)cbCapability.SelectedItem).Capability;
+
+            cbCapability.DisplayMember = "Name";
+
+            SelectedDevice.VideoResolution = selectedCapability;
         }
     }
 }

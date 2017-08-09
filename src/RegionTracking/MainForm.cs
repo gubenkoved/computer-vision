@@ -1,55 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
-using AForge.Video.DirectShow;
-using AForge.Imaging.Filters;
-using AForge.Imaging;
 using AForge;
-
-using Point = AForge.Point;
+using AForge.Imaging;
+using AForge.Imaging.Filters;
+using AForge.Video;
+using AForge.Video.DirectShow;
 using ComputerVision;
 using ComputerVision.Refined;
-using AForge.Video;
-using System.Threading;
-using System.Diagnostics;
-using System.Runtime.InteropServices; 
+using Point = AForge.Point;
 
 namespace RegionTracking
 {
     public partial class MainForm : Form
     {
-        VideoCaptureDevice _device;
-        Size _frameSize = new Size(320, 240);
-        
-        FiltersSequence _preprocessingFilters = new FiltersSequence(
-            Grayscale.CommonAlgorithms.RMY);
+        private VideoCaptureDevice _device;
+        private Size _frameSize;
 
-        UnmanagedImage _currentUnprocessed;
-        UnmanagedImage _currentProcessed;
-        UnmanagedImage _previousProcessed;
+        private FiltersSequence _normalizatorFilters;
+        private FiltersSequence _preprocessingFilters;
 
-        FeatureRegion _featureRegion;
+        private UnmanagedImage _currentUnprocessed;
+        private UnmanagedImage _currentProcessed;
+        private UnmanagedImage _previousProcessed;
 
-        bool _regionSelectionMode;
-        Rectangle _selectedRegion;
+        private FeatureRegion _featureRegion;
 
-        int _frameCount;
-        DateTime _lastFPSUpdate;
+        private bool _regionSelectionMode;
+        private Rectangle _selectedRegion;
 
-        Thread _workerThread;
-        AutoResetEvent _frameRecievedEvent = new AutoResetEvent(false);
+        private int _frameCount;
+        private DateTime _lastFPSUpdate;
+
+        private Thread _workerThread;
+        private AutoResetEvent _frameRecievedEvent = new AutoResetEvent(false);
 
         public MainForm()
         {
             InitializeComponent();
 
+            Init();
+
             _workerThread = new Thread(DoWorkerJob);
             _workerThread.Start();
+        }
+
+        private void Init()
+        {
+            _frameSize = new Size(ImageBox.Width, ImageBox.Height);
+
+            _normalizatorFilters = new FiltersSequence(
+                new ResizeBilinear(_frameSize.Width, _frameSize.Height));
+
+            _preprocessingFilters = new FiltersSequence(
+                Grayscale.CommonAlgorithms.RMY);
         }
 
         private void Invoke(Action action)
@@ -71,7 +79,12 @@ namespace RegionTracking
         private void OpenDeviceButton_Click(object sender, EventArgs e)
         {
             if (_device != null)
-                return;
+            {
+                _device.Stop();
+                _device.WaitForStop();
+            }
+
+            //OpenDeviceButton.Enabled = false;
 
             using (OpenDeviceForm openDeviceForm = new OpenDeviceForm(_frameSize))
             {
@@ -81,7 +94,9 @@ namespace RegionTracking
                     {
                         _device = openDeviceForm.SelectedDevice;
 
+                        _device.NewFrame -= Device_NewFrame;
                         _device.NewFrame += Device_NewFrame;
+
                         _device.Start();
                     }
                 }
@@ -90,10 +105,14 @@ namespace RegionTracking
 
         private void Device_NewFrame(object sender, NewFrameEventArgs args)
         {
-            if (_regionSelectionMode) 
+            if (_regionSelectionMode)
                 return;
 
-            _currentUnprocessed = UnmanagedImage.FromManagedImage(args.Frame);
+            UnmanagedImage rawFrame = UnmanagedImage.FromManagedImage(args.Frame);
+
+            UnmanagedImage normalized = _normalizatorFilters.Apply(rawFrame);
+
+            _currentUnprocessed = normalized;
 
             // allows worker thread to do the job
             _frameRecievedEvent.Set();
@@ -112,6 +131,7 @@ namespace RegionTracking
             ++_frameCount;
 
             UnmanagedImage sourceCopy = _currentUnprocessed.Clone();
+
             _currentProcessed = _preprocessingFilters.Apply(sourceCopy);
 
             if (_previousProcessed != null && _featureRegion != null)
@@ -119,7 +139,7 @@ namespace RegionTracking
                 // track the feature
                 _featureRegion.TrackFeature(_currentProcessed);
 
-                //
+                // update cursor position
                 UpdateCursor();
 
                 // draw feature region
@@ -166,7 +186,7 @@ namespace RegionTracking
 
                 UnmanagedImage img = _currentProcessed.Clone();
                 Drawing.Rectangle(img, _selectedRegion, Color.White);
-                
+
                 ImageBox.Image = img.ToManagedImage();
             }
         }
